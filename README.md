@@ -1,4 +1,5 @@
 # Template-Based Question Generation from Retrieved Sentences for Improved Unsupervised Question Answering
+python run_ner_extractor.py --output-dir /unsupervisedqa/ner --output-file-prefix ner_ --processing-chunk-size 150 --output-file-size 50000 --workers 3 --min-text-length-chars 150 --es-host localhost:9200 --es-index tdnetindex_sigmoidal1 --start-date 2021-01-04 --end-date 2021-02-06 --delta 1 --scroll-size='1m'
 
 Code and synthetic data from our [ACL 2020 paper](https://www.aclweb.org/anthology/2020.acl-main.413/)
 

@@ -22,7 +22,7 @@ if __name__ == '__main__':
     argp.add_argument('--start-date', type=str, help='', required=True)
     argp.add_argument('--end-date', type=str, help='', required=True)
     argp.add_argument('--delta', default=1, type=int, help='', required=True)
-    argp.add_argument('--scroll-size', type=str, default='2m', help='', required=False)
+    argp.add_argument('--scroll-size', type=str, default='1m', help='', required=False)
     argp.add_argument('--ssh-host', type=str, help='', required=False)
     argp.add_argument('--ssh-username', type=str, help='', required=False)
     argp.add_argument('--ssh-pkey', type=str, help='', required=False)
