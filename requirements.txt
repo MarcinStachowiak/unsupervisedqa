@@ -11,7 +11,7 @@ conllu==4.4
 cryptography==3.4.6
 cymem==2.0.5
 cytoolz==0.9.0.1
-datashift @ git+https://github.com/MarcinStachowiak/datashift.git@4db6e50d4cf59bf5542a35db8e44b4df04f516ac
+datashift @ git+https://github.com/MarcinStachowiak/datashift.git@1a6a59820c68b9b2b8ae56cae3798e9a398ed986
 dill==0.3.3
 elasticsearch==6.3.1
 elasticsearch6==6.8.1
