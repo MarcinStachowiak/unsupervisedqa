@@ -2,7 +2,7 @@ from datetime import timedelta, datetime
 
 from datashift.datapipeline import AbstractReader
 from elasticsearch import Elasticsearch
-
+import time
 
 class TDNetElasticsearchReader(AbstractReader):
     def __init__(self, es_host, es_index, start_date, end_date,delta, scroll_size='1m', sources='*'):
@@ -62,11 +62,14 @@ class TDNetElasticsearchReader(AbstractReader):
         self.es = Elasticsearch([self.es_host])
 
     def scroll(self, es, index, body, scroll, size):
+        start = time.time()
         page = es.search(index=index, body=body, scroll=scroll, size=size)
         scroll_id = page['_scroll_id']
         hits = page['hits']['hits']
         print("%d documents found" % page['hits']['total']['value'])
         while len(hits):
+            print('Elasticsearch scroll time needed: {}s'.format(time.time()-start))
+            start = time.time()
             yield hits
             page = es.scroll(scroll_id=scroll_id, scroll=scroll)
             scroll_id = page['_scroll_id']
