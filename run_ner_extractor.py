@@ -32,7 +32,7 @@ if __name__ == '__main__':
     if not os.path.exists(args.output_dir):
         os.mkdir(args.output_dir)
 
-    if 'ssh_host' in args:
+    if args.ssh_host is not None:
         server = SSHTunnelForwarder(
             args.ssh_host,
             ssh_username=args.ssh_username,
@@ -61,5 +61,7 @@ if __name__ == '__main__':
         .process_task(ArticleToJsonProcessTask()) \
         .shift()
 
-    if 'ssh_host' in args:
+    if args.ssh_host is not None:
         server.stop()
+# --output-dir /unsupervisedqa --output-file-prefix ner_ --processing-chunk-size 100 --output-file-size 2000 --workers 1 --min-text-length-chars 150 --es-host localhost:9200 --es-index tdnetindex_sigmoidal1 --start-date 2021-01-04 --end-date 2021-02-06 --delta 1
+# --ssh-host 35.184.91.112 --ssh-username m_stachowiak_sigmoidal_io --ssh-pkey  id_rsa  --ssh-remote-bind-port  9200  --ssh-local-bind-port  9201
