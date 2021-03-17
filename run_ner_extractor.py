@@ -22,6 +22,7 @@ if __name__ == '__main__':
     argp.add_argument('--start-date', type=str, help='', required=True)
     argp.add_argument('--end-date', type=str, help='', required=True)
     argp.add_argument('--delta', default=1, type=int, help='', required=True)
+    argp.add_argument('--scroll-size', type=str, default='2m', help='', required=False)
     argp.add_argument('--ssh-host', type=str, help='', required=False)
     argp.add_argument('--ssh-username', type=str, help='', required=False)
     argp.add_argument('--ssh-pkey', type=str, help='', required=False)
@@ -49,6 +50,7 @@ if __name__ == '__main__':
             start_date=args.start_date,
             end_date=args.end_date,
             delta=args.delta,
+            scroll_size=args.scroll_size,
             sources=['title', 'description.text']),
         saver=DefaultTextLineSaver(output_data_dir_path=args.output_dir,output_file_size=args.output_file_size,output_file_name_prefix=args.output_file_prefix),
         processing_chunk_size=args.processing_chunk_size,
