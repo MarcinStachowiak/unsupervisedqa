@@ -59,36 +59,33 @@ class TDNetElasticsearchReader(AbstractReader):
             }
         }
 
-    def setup(self):
+    def setup(self,execution_groups):
         self.es = Elasticsearch([self.es_host])
         self.logger=getLogger('datashift')
-
-    def scroll(self, es, index, body, scroll, size):
-        start = time.time()
-        page = es.search(index=index, body=body, scroll=scroll, size=size)
-        scroll_id = page['_scroll_id']
-        hits = page['hits']['hits']
-        self.logger.info("%d documents found" % page['hits']['total']['value'])
-        while len(hits):
-            self.logger.info('Process {} - Elasticsearch scroll time needed: {}s'.format(os.getpid(),time.time()-start))
-            start = time.time()
-            yield hits
-            page = es.scroll(scroll_id=scroll_id, scroll=scroll)
-            if scroll_id != page['_scroll_id']:
-                es.clear_scroll(scroll_id=scroll_id)
-            scroll_id = page['_scroll_id']
-            hits = page['hits']['hits']
+        date_from = execution_groups[0]
+        date_to = execution_groups[1]
+        self.body=self._build_query(date_from, date_to, self.sources)
+        self.chunk_size = execution_groups[2]
+        self.scroll_id=None
+        self.start_time=None
 
     def determine_chunked_execution_groups(self, pool, chunksize):
         return [(date_from, date_to, chunksize) for date_from, date_to in
                 self._date_range(self.start_date, self.end_date, self.delta)]
 
-    def next_data_chunk_gen(self, execution_groups):
-        date_from = execution_groups[0]
-        date_to = execution_groups[1]
-        chunk_size = execution_groups[2]
-        query_body = self._build_query(date_from, date_to, self.sources)
-        return self.scroll(self.es, self.es_index, query_body, self.scroll_size, chunk_size)
+    def next_data_chunk(self):
+        if self.scroll_id is None:
+            page = self.es.search(index=self.es_index, body=self.body, scroll=self.scroll_size, size=self.chunk_size)
+            self.logger.info('Process {} - {} documents found'.format(os.getpid(), page['hits']['total']['value']))
+        else:
+            page = self.es.scroll(scroll_id=self.scroll_id, scroll=self.scroll_size)
+        self.scroll_id = page['_scroll_id']
+        hits = page['hits']['hits']
+        if self.start_time is not None:
+            self.logger.info(
+                'Process {} - Elasticsearch scroll time needed: {}s'.format(os.getpid(), time.time() - self.start_time))
+        self.start_time = time.time()
+        return hits
 
     def _date_range(self, start, end, days_diff):
         start = datetime.strptime(start, "%Y-%m-%d").replace(hour=0, minute=0, second=0)
