@@ -74,7 +74,8 @@ class TDNetElasticsearchReader(AbstractReader):
             start = time.time()
             yield hits
             page = es.scroll(scroll_id=scroll_id, scroll=scroll)
-            es.clear_scroll(scroll_id=scroll_id)
+            if scroll_id != page['_scroll_id']:
+                es.clear_scroll(scroll_id=scroll_id)
             scroll_id = page['_scroll_id']
             hits = page['hits']['hits']
 
