@@ -81,9 +81,9 @@ class TDNetElasticsearchReader(AbstractReader):
             page = self.es.scroll(scroll_id=self.scroll_id, scroll=self.scroll_size)
         self.scroll_id = page['_scroll_id']
         hits = page['hits']['hits']
-        if self.start_time is not None:
-            self.logger.info(
-                'Process {} - Elasticsearch scroll time needed: {}s'.format(os.getpid(), time.time() - self.start_time))
+       # if self.start_time is not None:
+        #    self.logger.info(
+        #        'Process {} - Elasticsearch scroll time needed: {}s'.format(os.getpid(), time.time() - self.start_time))
         self.start_time = time.time()
         return hits
 
