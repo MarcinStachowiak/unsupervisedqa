@@ -92,11 +92,11 @@ class TDNetElasticsearchReader(AbstractReader):
 
     def _date_range(self, start, end, days_diff):
         start = datetime.strptime(start, "%Y-%m-%d").replace(hour=0, minute=0, second=0)
-        end = datetime.strptime(end, "%Y-%m-%d").replace(hour=23, minute=59, second=59)
+        end = datetime.strptime(end, "%Y-%m-%d").replace(hour=0, minute=0, second=0)
         delta = timedelta(days=days_diff)
         currentdate = start
         while currentdate + delta < end:
-            todate = (currentdate + delta).replace(hour=23, minute=59, second=59)
+            todate = (currentdate + delta).replace(hour=0, minute=0, second=0)
             yield self._date_to_str(currentdate), self._date_to_str(todate)
             currentdate += delta
             currentdate.replace(hour=0, minute=0, second=0)
