@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime
 from logging import getLogger
-
+import os
 from datashift.datapipeline import AbstractReader
 from elasticsearch import Elasticsearch
 import time
@@ -70,7 +70,7 @@ class TDNetElasticsearchReader(AbstractReader):
         hits = page['hits']['hits']
         self.logger.info("%d documents found" % page['hits']['total']['value'])
         while len(hits):
-            self.logger.info('Elasticsearch scroll time needed: {}s'.format(time.time()-start))
+            self.logger.info('Process {} - Elasticsearch scroll time needed: {}s'.format(os.getpid(),time.time()-start))
             start = time.time()
             yield hits
             page = es.scroll(scroll_id=scroll_id, scroll=scroll)
