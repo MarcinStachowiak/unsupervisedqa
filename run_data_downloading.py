@@ -67,5 +67,5 @@ if __name__ == '__main__':
 
     if args.ssh_host is not None:
         server.stop()
-# --output-dir /unsupervisedqa --output-file-prefix ner_ --processing-chunk-size 100 --output-file-size 2000 --workers 1 --min-text-length-chars 150 --es-host localhost:9200 --es-index tdnetindex_sigmoidal1 --start-date 2021-01-04 --end-date 2021-02-06 --delta 1
-# --ssh-host 35.184.91.112 --ssh-username m_stachowiak_sigmoidal_io --ssh-pkey  id_rsa  --ssh-remote-bind-port  9200  --ssh-local-bind-port  9201
+
+# --output-dir outputs/medical_ner --output-file-prefix ner2_ --processing-chunk-size 200 --output-file-size 2000 --workers 8 --es-host localhost:9201 --es-index tdnetindex_sigmoidal1 --start-date 2021-01-04 --end-date 2021-02-06 --delta 1 --ssh-host 35.184.91.112 --ssh-username m_stachowiak_sigmoidal_io --ssh-pkey id_rsa --ssh-remote-bind-port 9200 --ssh-local-bind-port 9201 --scroll-size 60s

@@ -12,10 +12,10 @@ from ner_extractor.reader import TDNetElasticsearchReader
 if __name__ == '__main__':
     argp = argparse.ArgumentParser()
     argp.add_argument('--input-data-path-pattern', help='', required=True)
-    argp.add_argument('--output-dir', default="output/", help='', required=True)
+    argp.add_argument('--output-dir', help='', required=True)
     argp.add_argument('--output-file-size', default=50000, type=int, help='')
-    argp.add_argument('--processing-chunk-size', default=100, type=int, help='')
-    argp.add_argument('--output-file-prefix', type=str, help='',required=True)
+    argp.add_argument('--processing-chunk-size', default=10000, type=int, help='')
+    argp.add_argument('--output-file-prefix', type=str, help='', required=True)
     argp.add_argument('--workers', default=1, type=int, help='')
     argp.add_argument('--min-text-length-chars', default=150, type=int, help='')
     args = argp.parse_args()
@@ -24,8 +24,11 @@ if __name__ == '__main__':
         os.mkdir(args.output_dir)
 
     DataPipeline(
-        reader=DefaultCSVReader(input_data_path_pattern=args.input_data_path_pattern,input_columns=["id","title","description"]),
-        saver=DefaultTextLineSaver(output_data_dir_path=args.output_dir,output_file_size=args.output_file_size,output_file_name_prefix=args.output_file_prefix),
+        reader=DefaultCSVReader(input_data_path_pattern=args.input_data_path_pattern,
+                                input_columns=["id", "title", "description"]),
+        saver=DefaultTextLineSaver(output_data_dir_path=args.output_dir,
+                                   output_file_size=args.output_file_size,
+                                   output_file_name_prefix=args.output_file_prefix),
         processing_chunk_size=args.processing_chunk_size,
         num_workers=args.workers) \
         .process_task(ElasticsearchEntryToArticle()) \
@@ -36,5 +39,4 @@ if __name__ == '__main__':
         .process_task(ArticleToJsonProcessTask()) \
         .shift()
 
-# --output-dir /unsupervisedqa --output-file-prefix ner_ --processing-chunk-size 100 --output-file-size 2000 --workers 1 --min-text-length-chars 150 --es-host localhost:9200 --es-index tdnetindex_sigmoidal1 --start-date 2021-01-04 --end-date 2021-02-06 --delta 1
-# --ssh-host 35.184.91.112 --ssh-username m_stachowiak_sigmoidal_io --ssh-pkey  id_rsa  --ssh-remote-bind-port  9200  --ssh-local-bind-port  9201
+# --input-data-path-pattern=outputs/raw/*/*.csv --output-dir outputs/medical_ner --output-file-prefix ner_ --processing-chunk-size 10000 --output-file-size 50000 --workers 1 --min-text-length-chars 150
