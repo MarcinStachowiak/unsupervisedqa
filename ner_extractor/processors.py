@@ -13,9 +13,9 @@ from ner_extractor.models import Article
 class ElasticsearchEntryToArticle(AbstractProcessingTask):
     def process(self, sample):
         article = Article()
-        article.import_from({'id': sample['_id'],
-                                    'title': sample['_source']['title'],
-                                    'text': sample['_source']['description']['text']})
+        article.import_from({'id': sample['id'],
+                                    'title': sample['title'],
+                                    'text': sample['description']})
         return article
 
 class ArticleTextCleaner(AbstractProcessingTask):
