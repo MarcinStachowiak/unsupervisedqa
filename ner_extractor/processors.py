@@ -57,6 +57,11 @@ class SentenceSplitterAndNerExtractor(AbstractProcessingTask):
         self.en_ner_bc5cdr_md = spacy.load("en_ner_bc5cdr_md")
         self.en_ner_bionlp13cg_md = spacy.load("en_ner_bionlp13cg_md")
 
+    def teardown(self):
+        del self.en_core_web_sm
+        del self.en_ner_bc5cdr_mWd
+        del self.en_ner_bionlp13cg_md
+
     def process(self, article):
         sentence_str_lst = self._sent_tokenize(article.text, article.title)
         sentence_structs = []

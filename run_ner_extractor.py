@@ -39,4 +39,4 @@ if __name__ == '__main__':
         .process_task(ArticleToJsonProcessTask()) \
         .shift()
 
-# --input-data-path-pattern=outputs/raw/*/*.csv --output-dir outputs/medical_ner --output-file-prefix ner_ --processing-chunk-size 10000 --output-file-size 50000 --workers 1 --min-text-length-chars 150
+# --input-data-path-pattern=outputs/raw/*/*.csv --output-dir outputs/medical_ner --output-file-prefix ner_ --processing-chunk-size 10000 --output-file-size 50000 --workers 16 --min-text-length-chars 150
