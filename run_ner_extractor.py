@@ -1,5 +1,8 @@
 import argparse
 import os
+os.environ['MKL_NUM_THREADS'] = '1'
+os.environ['NUMEXPR_NUM_THREADS'] = '1'
+os.environ['OMP_NUM_THREADS'] = '1'
 
 from datashift import DataPipeline, DefaultTextLineSaver, DefaultCSVReader
 from sshtunnel import SSHTunnelForwarder
