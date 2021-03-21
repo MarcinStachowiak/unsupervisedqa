@@ -7,7 +7,7 @@ os.environ['OMP_NUM_THREADS'] = '1'
 
 from datashift import DataPipeline, DefaultTextLineSaver, DefaultCSVReader
 
-from ner_extractor.filters import MinDescriptionLengthFilter, LanguageFilter
+from ner_extractor.filters import MinDescriptionLengthFilter, LanguageFilter, BlackListContentFilter
 from ner_extractor.processors import ElasticsearchEntryToArticle, ArticleTextCleaner, SentenceSplitterAndNerExtractor, \
     ArticleToJsonProcessTask
 
@@ -20,6 +20,7 @@ if __name__ == '__main__':
     argp.add_argument('--output-file-prefix', type=str, help='', required=True)
     argp.add_argument('--workers', default=1, type=int, help='')
     argp.add_argument('--min-text-length-chars', default=150, type=int, help='')
+    argp.add_argument('--black-list-file', type=str, help='')
     args = argp.parse_args()
 
     if not os.path.exists(args.output_dir):
@@ -35,6 +36,7 @@ if __name__ == '__main__':
         num_workers=args.workers) \
         .process_task(ElasticsearchEntryToArticle()) \
         .process_task(ArticleTextCleaner()) \
+        .filter_task(BlackListContentFilter(args.black_list_file)) \
         .filter_task(MinDescriptionLengthFilter(min_char_length=args.min_text_length_chars)) \
         .filter_task(LanguageFilter('en')) \
         .process_task(SentenceSplitterAndNerExtractor(ulim_char_per_sentence=500)) \

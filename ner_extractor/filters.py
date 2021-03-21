@@ -15,3 +15,17 @@ class LanguageFilter(AbstractFilterTask):
 
     def filter(self, article):
         return detect(article.text)==self.lang
+
+class BlackListContentFilter(AbstractFilterTask):
+    def __init__(self,filename):
+        self.filename=filename
+
+    def setup(self):
+        with open(self.filename) as f:
+            content = f.readlines()
+        self.anty_keys= [x.strip().lower() for x in content]
+
+    def filter(self, article):
+        lower_text=article.text.lower()
+        return all([key not in lower_text for key in self.anty_keys])
+
