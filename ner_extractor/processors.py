@@ -120,10 +120,14 @@ class SentenceSplitterAndNerExtractor(AbstractProcessingTask):
         doc = ner_model(text)
         if ents_dict is not None:
             for ent in doc.ents:
-                ents_dict[ent.text] = ent.label_
+                if '/' not in ent.text and ',' not in ent.text and '.' not in ent.text and ':' not in ent.text and self._is_ascii(ent.text):
+                    ents_dict[ent.text] = ent.label_
         if noun_chunks_dict is not None:
             for nc in doc.noun_chunks:
                 noun_chunks_dict[nc.text] = nc.root.dep_
+
+    def _is_ascii(self,s):
+        return all(ord(c) < 128 for c in s)
 
 
 class ArticleToJsonProcessTask(AbstractProcessingTask):
