@@ -1,4 +1,5 @@
 import re
+import time
 import unicodedata
 
 import spacy
@@ -14,43 +15,44 @@ class ElasticsearchEntryToArticle(AbstractProcessingTask):
     def process(self, sample):
         article = Article()
         article.import_from({'id': sample['id'],
-                                    'title': sample['title'],
-                                    'text': sample['description']})
+                             'title': sample['title'],
+                             'text': sample['description']})
         return article
 
+
 class ArticleTextCleaner(AbstractProcessingTask):
-    TAGS_TO_REMOVE=['h1','h2','h3','h4','h5','h6','h7']
-    MIN_LENGTH_FOR_TAGS_TO_REMOVE=100
+    TAGS_TO_REMOVE = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']
+    MIN_LENGTH_FOR_TAGS_TO_REMOVE = 100
 
     def setup(self):
-        self.latex_cleaner=LatexNodes2Text()
+        self.latex_cleaner = LatexNodes2Text()
 
-    def clean_text(self,text):
-        text=unicodedata.normalize('NFKD', text)
-        text  = self.cleanhtml(text)
-        text=self.latex_cleaner.latex_to_text(text)
+    def clean_text(self, text):
+        text = unicodedata.normalize('NFKD', text)
+        text = self.cleanhtml(text)
+        text = self.latex_cleaner.latex_to_text(text)
         text = re.sub(r"http\S+", "", text)
-        text=text.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ').strip()
+        text = text.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ').strip()
         text = re.sub(' +', ' ', text)
         return text
 
-    def cleanhtml(self,raw_html):
-        cleantext=BeautifulSoup(raw_html, "lxml")
+    def cleanhtml(self, raw_html):
+        cleantext = BeautifulSoup(raw_html, "lxml")
         for tag in self.TAGS_TO_REMOVE:
             for s in cleantext.select(tag):
-                if len(s.text)<self.MIN_LENGTH_FOR_TAGS_TO_REMOVE:
+                if len(s.text) < self.MIN_LENGTH_FOR_TAGS_TO_REMOVE:
                     s.extract()
         return cleantext.text
 
-
     def process(self, article):
-        article.title=self.clean_text(article.title)
-        article.text= self.clean_text(article.text)
+        article.title = self.clean_text(article.title)
+        article.text = self.clean_text(article.text)
         return article
 
+
 class SentenceSplitterAndNerExtractor(AbstractProcessingTask):
-    def __init__(self,ulim_char_per_sentence):
-        self.ulim_char_per_sentence=ulim_char_per_sentence
+    def __init__(self, ulim_char_per_sentence):
+        self.ulim_char_per_sentence = ulim_char_per_sentence
 
     def setup(self):
         self.en_core_web_sm = spacy.load("en_core_web_sm")
@@ -66,7 +68,7 @@ class SentenceSplitterAndNerExtractor(AbstractProcessingTask):
         sentence_str_lst = self._sent_tokenize(article.text, article.title)
         sentence_structs = []
         for sent_str in sentence_str_lst:
-            ents, noun_chunks = self._compute_ner_and_noun_chunks(sent_str,self.ulim_char_per_sentence)
+            ents, noun_chunks = self._compute_ner_and_noun_chunks(sent_str, self.ulim_char_per_sentence)
             if len(ents) + len(noun_chunks) == 0:
                 continue
 
@@ -122,6 +124,7 @@ class SentenceSplitterAndNerExtractor(AbstractProcessingTask):
         if noun_chunks_dict is not None:
             for nc in doc.noun_chunks:
                 noun_chunks_dict[nc.text] = nc.root.dep_
+
 
 class ArticleToJsonProcessTask(AbstractProcessingTask):
     def process(self, sample):
