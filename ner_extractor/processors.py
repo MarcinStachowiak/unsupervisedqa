@@ -1,5 +1,4 @@
 import re
-import time
 import unicodedata
 
 import spacy
@@ -8,7 +7,7 @@ from datashift import AbstractProcessingTask
 from pylatexenc.latex2text import LatexNodes2Text
 
 from common import utils
-from ner_extractor.models import Article
+from common.models import Article
 
 
 class ElasticsearchEntryToArticle(AbstractProcessingTask):
