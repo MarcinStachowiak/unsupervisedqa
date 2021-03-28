@@ -83,3 +83,23 @@ class Sentence:
 
     def __repr__(self):
         return str(self.__dict__)
+
+
+class PhraseObj:
+    def __init__(self, phrase_str, phrase_category):
+        self.phrase_str = phrase_str
+        self.phrase_category = phrase_category
+
+    @classmethod
+    def import_from(cls, row):
+        """
+        Example format: [["0 to 6 years", "DATE"], [5809465, 53318614, 49544471, 27237145, 54568155]]
+        """
+        phrase_pair = row[0]
+
+        phrase = cls(phrase_pair[0], phrase_pair[1])
+        return phrase
+
+    def __repr__(self):
+        return str(self.__dict__)
+

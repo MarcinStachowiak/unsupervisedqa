@@ -1,3 +1,4 @@
+# --input-data-path-pattern=outputs/wiki_ner/*.txt --output-dir outputs/wiki_es_upload --es-host localhost --es-index wiki_ner_index --processing-chunk-size 1000 --no-items-per-request 100 --workers 1 --ssh-host 107.22.222.219 --ssh-username ubuntu --ssh-pkey tdnet-elasticsearch-server.pem --ssh-remote-bind-port 9200 --ssh-local-bind-port 9201
 import argparse
 import logging
 import os

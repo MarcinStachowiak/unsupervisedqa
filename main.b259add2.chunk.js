@@ -1008,7 +1008,7 @@
                     key: "render", value: function () {
                         var e = this.props, t = e.token, n = e.error, r = e.authActions, a = this.state,
                             o = a.isVisibleModal, s = a.selectedModal;
-                        return t ? b.a.createElement(Gt.a, {to: N.projects}) : b.a.createElement(zt, {title: "Haystack Annotation Tool"}, b.a.createElement(Yt, {
+                        return t ? b.a.createElement(Gt.a, {to: N.projects}) : b.a.createElement(zt, {title: "Sigmoidal Annotation Tool"}, b.a.createElement(Yt, {
                             error: n,
                             onClearError: r.resetError,
                             onSubmit: r.doRegistration,
@@ -1952,11 +1952,14 @@
                 CHEMICAL_INTERACTIONS: "CHEMICAL_INTERACTIONS",
                 PROGNOSES_AND_RESEARCH: "PROGNOSES_AND_RESEARCH",
                 DISEASES: "DISEASES",
+                DIAGNOSTICS: "DIAGNOSTICS",
+                METHODS: "METHODS",
+                CAUSE_OR_MECHANISM_OF_DISEASE: "CAUSE_OR_MECHANISM_OF_DISEASE",
                 OTHER: "OTHER",
                 NOT_UNDERSTOOD: "NOT_UNDERSTOOD",
                 NOT_GIVEN: "NOT_GIVEN"
             }),
-            ga = Object.freeze((ua = {}, Object(pe.a)(ua, ba.GENERAL, "General questions and facts (e.g. What's the synthesis of blood cells called?)"), Object(pe.a)(ua, ba.SYMPTOMS, "Symptoms (e.g. “What is the manifestation of the disease?”),"), Object(pe.a)(ua, ba.TREATMENT, "Treatment effectiveness (e.g. “How to effectively treat the MS syndrome?”)"), Object(pe.a)(ua, ba.CHEMICAL_INTERACTIONS, "Chemical interactions (e.g. “Can digoxin be used with quinidine?”)"), Object(pe.a)(ua, ba.PROGNOSES_AND_RESEARCH, "Prognoses and research questions (“e.g What will be the average life expectancy of people with cardiomyopathy?”)"), Object(pe.a)(ua, ba.DISEASES, "Disease names (e.g. “What disease is characterized by difficulty initiating or respiratory disturbance during sleep?”)"), Object(pe.a)(ua, ba.OTHER, "Other"), Object(pe.a)(ua, ba.NOT_UNDERSTOOD, "Unclear question"), Object(pe.a)(ua, ba.NOT_GIVEN, "Answer is not given"), ua)),
+            ga = Object.freeze((ua = {}, Object(pe.a)(ua, ba.GENERAL, "General questions and facts (e.g. What's the synthesis of blood cells called?)"), Object(pe.a)(ua, ba.SYMPTOMS, "Symptoms (e.g. “What is the manifestation of the disease?”),"), Object(pe.a)(ua, ba.TREATMENT, "Treatment effectiveness (e.g. “How to effectively treat the MS syndrome?”)"), Object(pe.a)(ua, ba.CHEMICAL_INTERACTIONS, "Chemical interactions (e.g. “Can digoxin be used with quinidine?”)"), Object(pe.a)(ua, ba.PROGNOSES_AND_RESEARCH, "Prognoses and research questions (“e.g What will be the average life expectancy of people with cardiomyopathy?”)"), Object(pe.a)(ua, ba.DISEASES, "Disease names (e.g. “What disease is characterized by difficulty initiating or respiratory disturbance during sleep?”)"), Object(pe.a)(ua, ba.DIAGNOSTICS, "Diagnostics (e.g. “What did the X-ray examination diagnose?”)"), Object(pe.a)(ua, ba.METHODS, "Methods (e.g. “What is the best method to perform the ridge excision in an overweight patient?”)"), Object(pe.a)(ua, ba.CAUSE_OR_MECHANISM_OF_DISEASE, "Cause/Mechanism of disease (e.g. “What causes a patient to bleed during spine surgery?”)"), Object(pe.a)(ua, ba.OTHER, "Other"), Object(pe.a)(ua, ba.NOT_UNDERSTOOD, "Unclear question"), Object(pe.a)(ua, ba.NOT_GIVEN, "Answer is not given"), ua)),
             va = n(206), ya = n.n(va), Ea = function (e) {
                 function t() {
                     var e, n;
@@ -2250,7 +2253,7 @@
                             required: !0,
                             message: "Please select a category!"
                         }], initialValue: ba.GENERAL
-                    })(b.a.createElement(pa.a, {placeholder: "Select a category"}, b.a.createElement(pa.a.Option, {value: ba.GENERAL}, ga[ba.GENERAL]), b.a.createElement(pa.a.Option, {value: ba.SYMPTOMS}, ga[ba.SYMPTOMS]), b.a.createElement(pa.a.Option, {value: ba.TREATMENT}, ga[ba.TREATMENT]), b.a.createElement(pa.a.Option, {value: ba.CHEMICAL_INTERACTIONS}, ga[ba.CHEMICAL_INTERACTIONS]), b.a.createElement(pa.a.Option, {value: ba.PROGNOSES_AND_RESEARCH}, ga[ba.PROGNOSES_AND_RESEARCH]),  b.a.createElement(pa.a.Option, {value: ba.DISEASES}, ga[ba.DISEASES]),  b.a.createElement(pa.a.Option, {value: ba.OTHER}, ga[ba.OTHER])))), b.a.createElement(Ne.a, {
+                    })(b.a.createElement(pa.a, {placeholder: "Select a category"}, b.a.createElement(pa.a.Option, {value: ba.GENERAL}, ga[ba.GENERAL]), b.a.createElement(pa.a.Option, {value: ba.SYMPTOMS}, ga[ba.SYMPTOMS]), b.a.createElement(pa.a.Option, {value: ba.TREATMENT}, ga[ba.TREATMENT]), b.a.createElement(pa.a.Option, {value: ba.CHEMICAL_INTERACTIONS}, ga[ba.CHEMICAL_INTERACTIONS]), b.a.createElement(pa.a.Option, {value: ba.PROGNOSES_AND_RESEARCH}, ga[ba.PROGNOSES_AND_RESEARCH]),  b.a.createElement(pa.a.Option, {value: ba.DISEASES}, ga[ba.DISEASES]),b.a.createElement(pa.a.Option, {value: ba.DIAGNOSTICS}, ga[ba.DIAGNOSTICS]),  b.a.createElement(pa.a.Option, {value: ba.METHODS}, ga[ba.METHODS]),b.a.createElement(pa.a.Option, {value: ba.CAUSE_OR_MECHANISM_OF_DISEASE}, ga[ba.CAUSE_OR_MECHANISM_OF_DISEASE]), b.a.createElement(pa.a.Option, {value: ba.OTHER}, ga[ba.OTHER])))), b.a.createElement(Ne.a, {
                         block: !0,
                         type: "primary",
                         htmlType: "submit"
@@ -2767,6 +2770,15 @@
                                 value: ba.DISEASES,
                                 className: Js.a.answerCategoryRadioOption
                             }, ga[ba.DISEASES]), b.a.createElement(Ka.a, {
+                                value: ba.DIAGNOSTICS,
+                                className: Js.a.answerCategoryRadioOption
+                            }, ga[ba.DIAGNOSTICS]), b.a.createElement(Ka.a, {
+                                value: ba.CAUSE_OR_MECHANISM_OF_DISEASE,
+                                className: Js.a.answerCategoryRadioOption
+                            }, ga[ba.CAUSE_OR_MECHANISM_OF_DISEASE]), b.a.createElement(Ka.a, {
+                                value: ba.METHODS,
+                                className: Js.a.answerCategoryRadioOption
+                            }, ga[ba.METHODS]), b.a.createElement(Ka.a, {
                                 value: ba.OTHER,
                                 className: Js.a.answerCategoryRadioOption
                             }, ga[ba.OTHER])),
