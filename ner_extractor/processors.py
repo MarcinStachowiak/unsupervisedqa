@@ -115,12 +115,20 @@ class SentenceSplitterAndNerExtractor(AbstractProcessingTask):
         chunks = sorted(set([(k, v) for k, v in noun_chunks_dict.items()]))
         return ents, chunks
 
+    def _preprocess_text(self,text:str):
+        text=text.strip()
+        if text.startswith("'"):
+            text=text[1:]
+        if text.endswith("'"):
+            text=text[:-1]
+        return text.replace('\n', ' ').strip()
+
     def _perform_ner_and_add_to_dict(self, text, ner_model, ents_dict, noun_chunks_dict):
         doc = ner_model(text)
         if ents_dict is not None:
             for ent in doc.ents:
                 if '/' not in ent.text and ',' not in ent.text and '.' not in ent.text and ':' not in ent.text and self._is_ascii(ent.text):
-                    ents_dict[ent.text] = ent.label_
+                    ents_dict[self._preprocess_text(ent.text)] = ent.label_
         if noun_chunks_dict is not None:
             for nc in doc.noun_chunks:
                 noun_chunks_dict[nc.text] = nc.root.dep_
