@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     DataPipeline(
         reader=DefaultTextLineReader(input_data_path_pattern=args.input_data_path_pattern),
-        output_metadata_file_path='{}/elasticksearch_upload_metadata.yaml'.format(args.output_dir),
+        output_reduce_file_path='{}/elasticksearch_upload_metadata.yaml'.format(args.output_dir),
         processing_chunk_size=args.processing_chunk_size,
         num_workers=args.workers) \
         .process_task(TextLineToArticle()) \
