@@ -1,5 +1,5 @@
 from datashift import DataPipeline
-from datashift.datapipeline import DefaultTextLineReader, DefaultListReader, DefaultTextLineSaver
+from datashift.datapipeline import DefaultTextLineReader, DefaultTextLineSaver
 from pyspark import SparkContext, SparkConf
 from contextlib import ExitStack
 import argparse
@@ -12,7 +12,7 @@ import timy
 import yaml
 from distant_supervision import utils
 from distant_supervision.entity_to_queries_mapper import Entity2QpaProcessingTask, Entity2QpaGroupByEntity
-from distant_supervision.ner_entity_gatherer import TextLineToArticle, UniqueEntityExtractor, CountEntities, _clean_ners
+from distant_supervision.ner_entity_gatherer import TextLineToArticle, _clean_ners
 from distant_supervision.whxx_ngram_table import WhxxNgramTable
 from distant_supervision.data_models import Article, PhraseObj, PhraseMode
 from distant_supervision.synthetic_data_creator import SyntheticDataCreator, QUESTION_STYLES_FOR_JSONLINES, \
@@ -51,16 +51,6 @@ def main():
     argp.add_argument('--es-hosts', help='', default='')
     argp.add_argument('--es-index-readonly', help='', default=default_config['es_index_readonly'])
     argp.add_argument('--whxx-ngram-table', help='toml config file', default='resources/whxx_ngram_table.toml')
-    argp.add_argument('--num-partitions', type=int, default=10, help='')
-    argp.add_argument('--debug-save', help='for debugging purposes', action='store_true')
-
-    argp.add_argument('--ulim-ner', default=None, type=int, help='upper limit of NER')
-    argp.add_argument('--ner',
-                      help='NER entity2articles folder. If none is given, NER set is computed from corpus.')
-
-    argp.add_argument('--phrase-mode', choices=[e.value for e in PhraseMode], default=PhraseMode.NER_ONLY.value,
-                      help='Generate data using ner_only. Skip noun phrases')
-
     argp.add_argument('--aux-qs', type=int, dest='nb_aux_qs_matches',
                       help='number of auxiliary entity matches with query sentence', default=0)
     argp.add_argument('--aux-awc', type=int, dest='nb_aux_awc_matches',
@@ -78,7 +68,7 @@ def main():
     with open(args.whxx_ngram_table) as fptr:
         whxx_ngram_table = WhxxNgramTable.import_from_toml(fptr)
 
-    output_metadata_file_path='{}/entities_metadata.yaml'.format(args.output_dir)
+    output_metadata_file_path='outputs/wiki_es_upload/entities_metadata.yaml'
 
     with open(output_metadata_file_path) as file:
         entities_count = yaml.load(file, Loader=yaml.FullLoader)['entities_count']
@@ -107,7 +97,7 @@ def main():
         reader=DefaultListReader([(k,v) for k,v in entity2qpa[0][1].items()]), processing_chunk_size=10, num_workers=1,
         saver=DefaultTextLineSaver(output_data_dir_path=args.output_dir, output_file_name_prefix='qa_',
                                    output_file_size=1000)) \
-        .process_task(ObtainRetrievedSentencesProcessingTask(chunk_size=20,es_hosts=args.es_hosts,es_index_name=args.es_index_readonly,whxx_ngram_table=whxx_ngram_table,
+        .process_task(SyntheticDataCreator(chunk_size=20,es_hosts=args.es_hosts,es_index_name=args.es_index_readonly,whxx_ngram_table=whxx_ngram_table,
                                                              nb_aux_qs_matches=args.nb_aux_qs_matches,nb_aux_awc_matches=args.nb_aux_awc_matches,phrase_mode=PhraseMode.NER_ONLY)) \
         .flatten() \
         .shift()

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="annotationtool@34.70.232.122(tunel)" uuid="7a2beeec-52dd-4610-980a-b2a58f6133a4">
+    <data-source source="LOCAL" name="AWS Annotation Tool DB" uuid="65d3d3dc-9711-4b0d-8b5a-543df03600e7">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5433/annotationtool</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
     </data-source>
   </component>
 </project>

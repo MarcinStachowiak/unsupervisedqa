@@ -19,7 +19,6 @@ class CountEntities(AbstractReduceTask):
         global_unique_entities = {}
         for local_reduction in next_local_reduction_gen():
             for key, value in local_reduction.items():
-                key = str(key)
                 if key not in global_unique_entities:
                     global_unique_entities[key] = 1
                 else:

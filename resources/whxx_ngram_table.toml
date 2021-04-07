@@ -1,10 +1,10 @@
 [CARDINAL]
-"how many" = 2432
+"how many" = 100
+"how much" = 40
 # "what was" = 142
 # "what is" = 139
 # "in what" = 52
 # "when did" = 40
-# "how much" = 29
 # "according to" = 28
 # "as of" = 26
 # "about how" = 23
@@ -18,8 +18,9 @@
 # "in which" = 10
 
 [DATE]
+"when" = 2000
 "when did" = 1663
-# "when was" = 1276
+"when was" = 1276
 # "in what" = 1067
 # "what year" = 666
 # "on what" = 248
@@ -52,11 +53,13 @@
 # "what was" = 27
 # "during what" = 14
 "what event" = 11
+"what" = 11
 # "what war" = 11
 
 [FAC]
-"what is" = 90
-# "what was" = 34
+"what is" = 100
+"what was" = 60
+"what" = 100
 # "where did" = 28
 # "where was" = 14
 # "where is" = 14
@@ -66,7 +69,10 @@
 # "which street" = 10
 
 [GPE]
-"in what" = 221
+#"in what" = 15
+"where" = 60
+"what region" = 10
+#"what city" = 5
 # "what is" = 211
 # "where did" = 188
 # "what country" = 179
@@ -106,7 +112,8 @@
 "what law" = 100  # added manually
 
 [LOC]
-"what is" = 50
+"what is" = 10
+"where" = 50
 # "where did" = 35
 # "what was" = 20
 # "where is" = 19
@@ -120,7 +127,8 @@
 # "what is" = 20
 
 [NORP]
-"what is" = 108
+"what is" = 100
+"what" = 100
 # "what language" = 79
 # "what was" = 72
 # "what religion" = 31
@@ -138,14 +146,17 @@
 # "who did" = 10
 
 [ORDINAL]
-"where does" = 29
+"which" = 40
+"what" = 40
+#"where does" = 29
 # "what is" = 14
 # "where did" = 12
 # "in what" = 10
 
 [ORG]
-"what is" = 473
-# "what was" = 280
+"what is" = 100
+"what was" = 100
+"what" = 100
 # "who was" = 144
 # "what company" = 77
 # "where did" = 71
@@ -188,16 +199,18 @@
 
 [PERCENT]
 "what percentage" = 259
-# "how much" = 152
-# "what percent" = 95
+"how much" = 152
+"how many" = 66
+"what percent" = 95
 # "what was" = 62
 # "what is" = 55
-# "how many" = 36
 # "according to" = 20
 # "in the" = 12
 
 [PERSON]
 "who was" = 936
+"who is" = 442
+"who" = 936
 # "what is" = 315
 # "what was" = 272
 # "who is" = 242
@@ -268,6 +281,7 @@
 
 [PRODUCT]
 "what was" = 26
+"what" = 50
 # "what is" = 25
 # "who was" = 10
 
@@ -280,12 +294,14 @@
 # "how far" = 14
 
 [TIME]
+"when" = 40
 "how long" = 16
 # "what is" = 11
 
 [WORK_OF_ART]
-"what was" = 104
-# "what is" = 66
+"what was" = 100
+"what is" = 66
+"what" = 100
 # "what song" = 24
 # "what did" = 14
 # "what book" = 11
