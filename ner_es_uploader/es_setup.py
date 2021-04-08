@@ -107,7 +107,7 @@ def setup_es(es_host, es_index):
                     "index": False,
                 },
                 "article_id": {
-                    "type": "integer",
+                    "type": "text",
                     "index": True,
                 },
                 "body": mappings_for_analyzed_text_field,

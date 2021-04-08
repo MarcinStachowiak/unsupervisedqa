@@ -25,7 +25,7 @@ if __name__ == '__main__':
     argp.add_argument('--num-entities-per-article-to-consider', type=int, default=30, help='')
     argp.add_argument('--max-words-in-query-sentence', type=int, default=100, help='')
     argp.add_argument('--max-num-of-sentences', type=int, default=8, help='')
-    argp.add_argument('--num-entities-per-article-to-keep', type=int, default=5, help='')
+    argp.add_argument('--num-entities-per-article-to-keep', type=int, default=8, help='')
     argp.add_argument('--max-words-in-context', type=int, default=400, help='')
 
     args = argp.parse_args()

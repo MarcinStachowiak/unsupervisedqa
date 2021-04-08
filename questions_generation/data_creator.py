@@ -30,7 +30,7 @@ class SyntheticDataCreator(AbstractProcessingTask):
                  ulim_count=None,
                  nb_ner_ulim=None,
                  num_hits_from_es=1000,
-                 max_words_in_question=30):
+                 max_words_in_question=28):
 
         self.es_hosts=es_hosts
         self.es_index_name=es_index_name

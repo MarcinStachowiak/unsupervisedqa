@@ -127,7 +127,7 @@ class PhraseObj:
 
 class QueriesPerArticleObj:
     def __init__(self, article_id=None, article_title=None, article_raw=None, article_phrases=None, filtered_sents=None, phrase=None):
-        self.article_id = int(article_id) if article_id is not None else article_id
+        self.article_id = article_id if article_id is not None else article_id
         self.article_title = article_title
         self.article_raw = article_raw
         self.article_phrases = article_phrases
