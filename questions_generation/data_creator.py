@@ -154,7 +154,7 @@ class SyntheticDataCreator(AbstractProcessingTask):
                 "article_title": qpa.article_title,
             },
             "question": {
-                "article_id": int(hit['_source']['article_id']),
+                "article_id": hit['_source']['article_id'],
                 "article_title": hit['_source']['article_title'],
                 "phrases": hit_phrases,
             },
