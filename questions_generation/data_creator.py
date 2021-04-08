@@ -219,7 +219,7 @@ class SyntheticDataCreator(AbstractProcessingTask):
 
             for hit_idx, hit in enumerate(results['hits']['hits']):
                 retrieved_str = hit['_source']['body']
-                hit_article_id = int(hit['_source']['article_id'])
+                hit_article_id = hit['_source']['article_id']
 
                 # TODO add create real hit_phrases
                 hit_phrases = self._get_hit_phrases(hit)
